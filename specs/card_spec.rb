@@ -23,25 +23,44 @@ describe Card do
   describe "Testing to_s" do
 
     it "to_s returns a readable String value logically for values 2-10" do
-      # Test to ensure that to_s works for cards values 2-10
-      # for example:  "2 of diamonds"
+      [:hearts, :spades, :clubs, :diamonds].each do |suit|
+        (2..10).each do |value|
+          card = Card.new(value, suit)
+          card.to_s.must_equal "#{value} of #{suit}"
+        end
+      end
     end
 
     it "to_s returns a readable String value for Ace, Jack, Queen, King" do
-      # Test to ensure that to_s works for cards values 1, and 11-13
-      # For example: "Queen of hearts"
+      values = {
+        "Ace" => 1,
+        "Jack" => 11,
+        "Queen" => 12,
+        "King" => 13
+      }
+      [:hearts, :spades, :clubs, :diamonds].each do |suit|
+        values.each do |name, value|
+          card = Card.new(value, suit)
+          card.to_s.must_equal "#{name} of #{suit}"
+        end
+      end
     end
   end
 
   describe "Reader methods" do
 
     it "Can retrieve the value of the card using a `.value`." do
-      # ensure that `.value works as expected`
+      value = 4
+      card = Card.new(value, :diamonds)
+      card.must_respond_to :value
+      card.value.must_equal value
     end
 
     it "Can retrieve the value of the card using a `.suit`." do
-      # ensure that `.suit works as expected returning the symbol of the suit`
-
+      suit = :diamonds
+      card = Card.new(4, suit)
+      card.must_respond_to :suit
+      card.suit.must_equal suit
     end
   end
 
